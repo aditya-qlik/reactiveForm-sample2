@@ -7,3 +7,19 @@
 input.ng-invalid.ng-touched{
     border-color: red;
 }
+.card {
+    padding:2px 16px;
+    border: 0 4px 8px 0;
+    border-radius: 10px;
+    border-style: outset;
+    background-color: lightgrey;
+    transition: 0.3s;
+    width: 100%;
+    overflow: auto;
+}
+
+.container{
+    
+    padding: 50px;
+    margin: 20px;
+}

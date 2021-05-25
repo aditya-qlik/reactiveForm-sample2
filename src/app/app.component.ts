@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, NgForm, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +29,7 @@ export class AppComponent {
   initAddress() {
     return this.fb.group({
       street: ['', Validators.required],
-      postcode: ['', Validators.required, Validators.minLength(6)],
+      postcode: ['', Validators.required],
       phonenumber: this.fb.array([
         this.initNumber()
       ])
@@ -40,11 +40,29 @@ export class AppComponent {
       number: ['', Validators.required]
     })
   }
+  addAddress() {
+    const control = <FormArray>this.signUpForm.controls['addresses'];
+    control.push(this.initAddress());
+  }
 
+  removeAddress(i: number) {
+    const control = <FormArray>this.signUpForm.controls['addresses'];
+    control.removeAt(i);
+  }
+
+  addNumber(address:any): void {
+    const control = <FormArray>address.controls.phonenumber;
+    control.push(this.initNumber());
+  }
+
+  removeNumber(address:any,j: number) {
+    const control = <FormArray>address.controls.phonenumber;
+    control.removeAt(j);
+  }
   onSubmit() {
     this.submitted = true;
 
-    console.log(this.signUpForm)
+    // console.log(this.signUpForm)
 
     if (this.signUpForm.invalid) {
       return;

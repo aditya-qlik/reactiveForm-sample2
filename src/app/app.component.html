@@ -4,86 +4,103 @@
 <div class="container">
   <div>
     <form [formGroup]="signUpForm" (ngSubmit)='onSubmit()'>
-        <div class="form-group">
-          First Name:
-          <input type="text" formControlName="fName" placeholder="Enter first name">
-          <span *ngIf="signUpForm.controls['fName'].errors">
-            <span *ngIf="signUpForm.controls['fName'].errors.required && signUpForm.controls['fName'].touched">
-              Please Enter First name
-            </span>
+      <div class="form-group">
+        First Name:
+        <input type="text" formControlName="fName" placeholder="Enter first name">
+        <span *ngIf="signUpForm.controls['fName'].errors">
+          <span *ngIf="signUpForm.controls['fName'].errors.required && signUpForm.controls['fName'].touched">
+            Please Enter First name
           </span>
-        </div>
-        <br>
-        <div class="form-group">
-          Last Name:
-          <input type="text" formControlName="lName" placeholder="Enter last name">
-          <span *ngIf="signUpForm.controls['lName'].errors">
-            <span *ngIf="signUpForm.controls['lName'].errors.required && signUpForm.controls['lName'].touched">
-              Please Enter Last name
-            </span>
+        </span>
+      </div>
+      <br>
+      <div class="form-group">
+        Last Name:
+        <input type="text" formControlName="lName" placeholder="Enter last name">
+        <span *ngIf="signUpForm.controls['lName'].errors">
+          <span *ngIf="signUpForm.controls['lName'].errors.required && signUpForm.controls['lName'].touched">
+            Please Enter Last name
           </span>
-        </div>
-        <br>
-        <div formArrayName="addresses">
-          <div *ngFor="let address of signUpForm.controls.addresses.controls; let i=index" >
-              <div>Address:</div>
-              <br>
-            <div  [formGroupName]="i" >
-              <div >
-                <div class="form-group">
-                  street-
-                  <input type="text" class="form-control" formControlName="street">
-                </div>
-                <br>
-              </div>
-              <div >
-                <div class="form-group">
-                  Postal Code-
-                  <input type="text" class="form-control" formControlName="postcode">
-                </div>
-                <br>
-              </div>
+        </span>
+      </div>
+      <br>
+      <div formArrayName="addresses">
+        <div *ngFor="let address of signUpForm.controls.addresses.controls; let i=index" >
+          <div style="text-align: center">
+            <br>
+            <span>Address {{i + 1}}</span>
+          </div>
+          <br>
+          <div [formGroupName]="i" class="card" >
+            <button *ngIf="signUpForm.controls.addresses.controls.length > 1" (click)="removeAddress(i)" style="cursor: default; float: right">
+              X
+            </button>
+            <br>
               <div>
-                <div formArrayName="phonenumber"
-                  *ngFor="let number of signUpForm.controls.addresses.controls[i].controls.phonenumber.controls; let j=index">
-                  <div [formGroupName]="j">
-                    <div class="form-group" style="padding-right:0px">
-                      Number
-                      <input type="tel" class="form-control"  placeholder="Enter Number"  pattern="[0-9]{10}" formControlName="number">
-                    </div>
-                    <br>
-                  </div>
-                </div>
+                street-
+                <input type="text" class="form-control" formControlName="street">
               </div>
-            </div>
+              <br>
+              <div>
+                postcode-
+                <input type="text" class="form-control" formControlName="postcode">
+              </div>
+              <br>
+              <div formArrayName="phonenumber"
+                *ngFor="let number of signUpForm.controls.addresses.controls[i].controls.phonenumber.controls; let j=index"
+                class="col-md-6">
+                <div [formGroupName]="j">
+                  <div style="padding-right:0px">
+                    Number
+                    <button *ngIf="address.controls.phonenumber.controls.length > 1" (click)="removeNumber(address, j)" style="cursor: default; float: right">
+                      delete no.
+                    </button>
+                    <input type="text" class="form-control" placeholder="Enter Number" formControlName="number">
+                  </div>
+                  <br>
+                </div>
+                <div>
+                  <button class="pull-right" *ngIf="j == address.controls.phonenumber.controls.length-1"
+                  (click)="addNumber(address)">Add Alternate Number
+                </button>
+                </div>
+                <br>
+              </div>
           </div>
         </div>
-        <div class="form-group">
-          Email Id:
-          <input type="text" formControlName="emailId" placeholder="Enter Email Id">
-          <span *ngIf="signUpForm.controls['emailId'].errors">
-            <span
-              *ngIf="(signUpForm.controls['emailId'].errors.required || signUpForm.controls['emailId'].errors.email) && signUpForm.controls['emailId'].touched">
-              Please Enter valid Email id
-            </span>
+      </div>
+      <div>
+        <button (click)="addAddress()">
+          Add New address
+        </button>
+      </div>
+      <br>
+      <div class="form-group">
+        Email Id:
+        <input type="text" formControlName="emailId" placeholder="Enter Email Id">
+        <span *ngIf="signUpForm.controls['emailId'].errors">
+          <span
+            *ngIf="(signUpForm.controls['emailId'].errors.required || signUpForm.controls['emailId'].errors.email) && signUpForm.controls['emailId'].touched">
+            Please Enter valid Email id
           </span>
-        </div>
-        <br>
-        <div class="form-group">
-          Enter password:
-          <input type="password" formControlName="userPassword" placeholder="Enter password">
-          <span *ngIf="signUpForm.controls['userPassword'].errors">
-            <span
-              *ngIf="(signUpForm.controls['userPassword'].errors.required || signUpForm.controls['userPassword'].errors.minlength) && signUpForm.controls['userPassword'].touched">
-              Minmum Length 6
-            </span>
+        </span>
+      </div>
+      <br>
+      <div class="form-group">
+        Enter password:
+        <input type="password" formControlName="userPassword" placeholder="Enter password">
+        <span *ngIf="signUpForm.controls['userPassword'].errors">
+          <span
+            *ngIf="(signUpForm.controls['userPassword'].errors.required || signUpForm.controls['userPassword'].errors.minlength) && signUpForm.controls['userPassword'].touched">
+            Minmum Length 6
           </span>
-        </div>
-        <br>
-        <div class="form-group">
-          <span><input type="submit" value="Submit" [disabled]="!signUpForm.valid"></span>
-          <span><button (click)='onReset()'>Reset</button></span>
-        </div>
+        </span>
+      </div>
+      <br>
+      <div class="form-group">
+        <span><input type="submit" value="Submit" [disabled]="!signUpForm.valid"></span>
+        <span><button (click)='onReset()'>Reset</button></span>
+      </div>
     </form>
   </div>
 </div>
