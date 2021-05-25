@@ -1,0 +1,9 @@
+.container{
+    padding: 50px 0;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+}
+input.ng-invalid.ng-touched{
+    border-color: red;
+}
