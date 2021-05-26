@@ -10,8 +10,15 @@ export class AppComponent {
   title = 'reactiveForm-sample';
   signUpForm: FormGroup | any;
   submitted = false;
-
-
+  rows: any = [];
+  columns: any = [
+    { name: 'FirstName' },
+    { name: 'LastName' },
+    { name: 'Email' },
+    { name: 'Street' },
+    { name: 'PostalCode' },
+    { name: 'PhoneNumber' }
+  ];
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -50,15 +57,16 @@ export class AppComponent {
     control.removeAt(i);
   }
 
-  addNumber(address:any): void {
+  addNumber(address: any): void {
     const control = <FormArray>address.controls.phonenumber;
     control.push(this.initNumber());
   }
 
-  removeNumber(address:any,j: number) {
+  removeNumber(address: any, j: number) {
     const control = <FormArray>address.controls.phonenumber;
     control.removeAt(j);
   }
+
   onSubmit() {
     this.submitted = true;
 
@@ -67,8 +75,37 @@ export class AppComponent {
     if (this.signUpForm.invalid) {
       return;
     }
+    this.addTable();
+    this.rows = [...this.rows];
+    console.log(JSON.stringify(this.rows, null, 4))
     console.log(JSON.stringify(this.signUpForm.value, null, 4))
+
   }
+
+  addTable() {
+    // console.log(JSON.stringify(this.signUpInfo, null, 4))
+      const row = {
+        firstName: this.signUpForm.value.fName,
+        lastName: this.signUpForm.value.lName,
+        email: this.signUpForm.value.emailId,
+        street: this.signUpForm.value.addresses[0].street,
+        postalCode: this.signUpForm.value.addresses[0].postcode,
+        phoneNumber: this.signUpForm.value.addresses[0].phonenumber[0].number
+      }
+      this.rows.push(row)
+    
+  }
+
+  // addressTable(index:any){
+  //   for (let i in this.signUpInfo[index].address){
+  //     this.rowsAddress.push(
+  //       {
+  //         Street: this.signUpInfo[index].address[i].street,
+  //         Postcode: this.signUpInfo[index].address[i].postcode
+  //       }
+  //     )
+  //   }
+  // }
 
   onReset() {
     this.submitted = false;
