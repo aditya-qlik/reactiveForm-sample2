@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, NgForm, FormArray } from '@angular/forms';
+import { DataTableComponent } from './data-table/data-table.component';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +11,16 @@ export class AppComponent {
   title = 'reactiveForm-sample';
   signUpForm: FormGroup | any;
   submitted = false;
-  rows: any = [];
-  columns: any = [
-    { name: 'FirstName' },
-    { name: 'LastName' },
-    { name: 'Email' },
-    { name: 'Street' },
-    { name: 'PostalCode' },
-    { name: 'PhoneNumber' }
-  ];
+  @ViewChild(DataTableComponent) datatable: any;
+  // rows: any = [];
+  // columns: any = [
+  //   { name: 'FirstName' },
+  //   { name: 'LastName' },
+  //   { name: 'Email' },
+  //   { name: 'Street' },
+  //   { name: 'PostalCode' },
+  //   { name: 'PhoneNumber' }
+  // ];
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -75,26 +77,25 @@ export class AppComponent {
     if (this.signUpForm.invalid) {
       return;
     }
-    this.addTable();
-    this.rows = [...this.rows];
-    console.log(JSON.stringify(this.rows, null, 4))
-    console.log(JSON.stringify(this.signUpForm.value, null, 4))
+    this.datatable.addTable(this.signUpForm.value);
+    // console.log(JSON.stringify(this.rows, null, 4))
+    // console.log(JSON.stringify(this.signUpForm.value, null, 4))
 
   }
 
-  addTable() {
-    // console.log(JSON.stringify(this.signUpInfo, null, 4))
-      const row = {
-        firstName: this.signUpForm.value.fName,
-        lastName: this.signUpForm.value.lName,
-        email: this.signUpForm.value.emailId,
-        street: this.signUpForm.value.addresses[0].street,
-        postalCode: this.signUpForm.value.addresses[0].postcode,
-        phoneNumber: this.signUpForm.value.addresses[0].phonenumber[0].number
-      }
-      this.rows.push(row)
-    
-  }
+  // addTable() {
+  //   // console.log(JSON.stringify(this.signUpInfo, null, 4))
+  //     const row = {
+  //       firstName: this.signUpForm.value.fName,
+  //       lastName: this.signUpForm.value.lName,
+  //       email: this.signUpForm.value.emailId,
+  //       street: this.signUpForm.value.addresses[0].street,
+  //       postalCode: this.signUpForm.value.addresses[0].postcode,
+  //       phoneNumber: this.signUpForm.value.addresses[0].phonenumber[0].number
+  //     }
+  //     this.rows.push(row)
+  //     this.rows = [...this.rows];
+  // }
 
   // addressTable(index:any){
   //   for (let i in this.signUpInfo[index].address){
