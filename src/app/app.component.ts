@@ -38,7 +38,7 @@ export class AppComponent {
   initAddress() {
     return this.fb.group({
       street: ['', Validators.required],
-      postcode: ['', Validators.required],
+      postcode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.pattern(/^[0-9]\d*$/)])],
       phonenumber: this.fb.array([
         this.initNumber()
       ])
@@ -46,7 +46,7 @@ export class AppComponent {
   }
   initNumber() {
     return this.fb.group({
-      number: ['', Validators.required]
+      number: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern(/^[0-9]\d*$/)])]
     })
   }
   addAddress() {
@@ -82,31 +82,6 @@ export class AppComponent {
     // console.log(JSON.stringify(this.signUpForm.value, null, 4))
 
   }
-
-  // addTable() {
-  //   // console.log(JSON.stringify(this.signUpInfo, null, 4))
-  //     const row = {
-  //       firstName: this.signUpForm.value.fName,
-  //       lastName: this.signUpForm.value.lName,
-  //       email: this.signUpForm.value.emailId,
-  //       street: this.signUpForm.value.addresses[0].street,
-  //       postalCode: this.signUpForm.value.addresses[0].postcode,
-  //       phoneNumber: this.signUpForm.value.addresses[0].phonenumber[0].number
-  //     }
-  //     this.rows.push(row)
-  //     this.rows = [...this.rows];
-  // }
-
-  // addressTable(index:any){
-  //   for (let i in this.signUpInfo[index].address){
-  //     this.rowsAddress.push(
-  //       {
-  //         Street: this.signUpInfo[index].address[i].street,
-  //         Postcode: this.signUpInfo[index].address[i].postcode
-  //       }
-  //     )
-  //   }
-  // }
 
   onReset() {
     this.submitted = false;
