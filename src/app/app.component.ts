@@ -12,15 +12,6 @@ export class AppComponent {
   signUpForm: FormGroup | any;
   submitted = false;
   @ViewChild(DataTableComponent) datatable: any;
-  // rows: any = [];
-  // columns: any = [
-  //   { name: 'FirstName' },
-  //   { name: 'LastName' },
-  //   { name: 'Email' },
-  //   { name: 'Street' },
-  //   { name: 'PostalCode' },
-  //   { name: 'PhoneNumber' }
-  // ];
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
