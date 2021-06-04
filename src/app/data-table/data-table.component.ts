@@ -41,7 +41,7 @@ export class DataTableComponent implements OnInit {
   }
 
   addTable(signUpForm: any) {
-    console.log(JSON.stringify(signUpForm, null, 4))
+    // console.log(JSON.stringify(signUpForm, null, 4));
     const { fname, lname, email, streetName, postalCode, phoneNo } = this.getTableData(signUpForm);
     const row = {
       firstName: fname,
