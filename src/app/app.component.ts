@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'reactiveForm-sample';
   signUpForm: FormGroup | any;
   submitted = false;
+  
   @ViewChild(DataTableComponent) datatable: any;
   constructor(private fb: FormBuilder) { }
 
@@ -68,7 +69,9 @@ export class AppComponent {
     if (this.signUpForm.invalid) {
       return;
     }
+    
     this.datatable.addTable(this.signUpForm.value);
+
     // console.log(JSON.stringify(this.rows, null, 4))
     // console.log(JSON.stringify(this.signUpForm.value, null, 4))
 

@@ -11,7 +11,7 @@ export class DataTableComponent implements OnInit {
   columns: any = [
     { name: 'FirstName' },
     { name: 'LastName' },
-    { name: 'Email' },
+    { name: 'EmailId' },
     { name: 'Street' },
     { name: 'PostalCode' },
     { name: 'PhoneNumber' }
@@ -21,18 +21,38 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  addTable(signUpForm:any) {
+
+  getTableData(signUpForm: any) {
+    const { fName: fname, lName: lname, addresses: address, emailId: email } = signUpForm;
+    const { streetName, postalCode, phoneNo } = this.getAddress(address);
+    // console.log(fname + " " + lname + " " + email + " " + streetName + " " + postalCode + " " + phoneNumber)
+    return { fname, lname, email, streetName, postalCode, phoneNo };
+  }
+
+  getAddress(addresses: any) {
+    const [{ street: streetName, postcode: postalCode, phonenumber: telephoneNo }] = addresses;
+    const phoneNo = this.getPhoneNumber(telephoneNo);
+    return { streetName, postalCode, phoneNo };
+  }
+
+  getPhoneNumber(telephoneNo: any) {
+    const [{ number: teleNumber }] = telephoneNo;
+    return teleNumber;
+  }
+
+  addTable(signUpForm: any) {
     console.log(JSON.stringify(signUpForm, null, 4))
-      const row = {
-        firstName: signUpForm.fName,
-        lastName: signUpForm.lName,
-        email: signUpForm.emailId,
-        street:signUpForm.addresses[0].street,
-        postalCode: signUpForm.addresses[0].postcode,
-        phoneNumber: signUpForm.addresses[0].phonenumber[0].number
-      }
-      this.rows.push(row)
-      this.rows = [...this.rows];
+    const { fname, lname, email, streetName, postalCode, phoneNo } = this.getTableData(signUpForm);
+    const row = {
+      firstName: fname,
+      lastName: lname,
+      emailId: email,
+      street: streetName,
+      postalCode: postalCode,
+      phoneNumber: phoneNo
+    };
+    this.rows.push(row);
+    this.rows = [...this.rows];
   }
 
 }
