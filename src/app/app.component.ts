@@ -42,23 +42,23 @@ export class AppComponent {
     })
   }
   addAddress() {
-    const control = <FormArray>this.signUpForm.controls['addresses'];
-    control.push(this.initAddress());
+    const alternateAddresss = <FormArray>this.signUpForm.controls['addresses'];
+    alternateAddresss.push(this.initAddress());
   }
 
   removeAddress(i: number) {
-    const control = <FormArray>this.signUpForm.controls['addresses'];
-    control.removeAt(i);
+    const alternateAddresss = <FormArray>this.signUpForm.controls['addresses'];
+    alternateAddresss.removeAt(i);
   }
 
   addNumber(address: any): void {
-    const control = <FormArray>address.controls.phonenumber;
-    control.push(this.initNumber());
+    const alternateNumber = <FormArray>address.controls.phonenumber;
+    alternateNumber.push(this.initNumber());
   }
 
   removeNumber(address: any, j: number) {
-    const control = <FormArray>address.controls.phonenumber;
-    control.removeAt(j);
+    const alternateNumber = <FormArray>address.controls.phonenumber;
+    alternateNumber.removeAt(j);
   }
 
   onSubmit() {
